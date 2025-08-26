@@ -35,7 +35,80 @@ print(response)
 
 **Web:** BeautifulSoupWebReader, WikipediaReader
 
-.
+**🔹 Types of Loaders in LlamaIndex (with Examples)**
+
+**1. File-based Loaders 📂**
+
+Used for local files like .pdf, .docx, .txt, .csv, etc.
+
+**Example: Directory Loader**
+
+```python
+from llama_index.core import SimpleDirectoryReader
+
+#Load all files from "data" folder
+documents = SimpleDirectoryReader("data/").load_data()
+
+print(len(documents), "documents loaded")
+print(documents[0].text[:200])   # preview first doc text
+```
+
+**2. PDF and Docx Loaders 📑**
+
+For directly handling documents.
+
+**Example: PDF Loader**
+
+```python
+from llama_index.readers.file import PDFReader
+
+reader = PDFReader()
+documents = reader.load_data(file="report.pdf")
+
+print(documents[0].text[:300])
+```
+
+**3. Database Loaders 🗄️**
+
+For SQL databases or Pandas DataFrames.
+
+**Example: SQL Database Loader**
+
+```python
+from sqlalchemy import create_engine
+from llama_index.readers.database import DatabaseReader
+
+engine = create_engine("sqlite:///example.db")
+
+reader = DatabaseReader(engine, include_tables=["users"])
+documents = reader.load_data()
+
+print(documents[0].text[:200])
+```
+
+**4. Web Loaders 🌐**
+
+For scraping and ingesting from websites.
+
+**Example: Web Page Loader**
+
+from llama_index.readers.web import SimpleWebPageReader
+
+urls = ["https://docs.llamaindex.ai/en/stable/"]
+documents = SimpleWebPageReader().load_data(urls)
+
+print(documents[0].metadata)
+
+| **Category** | **Examples**                                           | **Use Cases**                 |
+| ------------ | ------------------------------------------------------ | ----------------------------- |
+| File-based   | `SimpleDirectoryReader`, `PDFReader`, `DocxReader`     | Local PDFs, Word docs         |
+| Database     | `DatabaseReader`, `PandasCSVReader`                    | SQL, CSV, Pandas data         |
+| Web          | `SimpleWebPageReader`, `WikipediaReader`               | Websites, Wikipedia           |
+| App/Cloud    | `NotionPageReader`, `GoogleDriveReader`, `SlackReader` | SaaS integrations             |
+| Custom       | Subclass `BaseReader`                                  | Any data source not supported |
+
+
+
 
 **🔹 What is a Document in LlamaIndex?**
 
