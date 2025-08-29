@@ -31,3 +31,11 @@ LLMRerank – ask an LLM to rerank nodes by relevance.
 KeywordNodePostprocessor – filter nodes that don’t contain specific keywords.
 
 TimeWeightedPostprocessor – prefer recent documents.
+
+```python
+query_engine = RetrieverQueryEngine(
+    retriever=retriever,
+    node_postprocessors=[similarity_postprocessor],
+    response_synthesizer=response_synthesizer,
+)
+```
