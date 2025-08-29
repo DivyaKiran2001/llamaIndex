@@ -82,9 +82,62 @@ Every index in LlamaIndex has its own default retriever type:
 
 VectorStoreIndex → VectorIndexRetriever
 
+**VectorIndexRetriever** :
+
+It is a retriever class that fetches the most relevant text chunks (nodes) from a VectorStoreIndex.
+
+```python
+VectorIndexRetriever(
+    index: VectorStoreIndex,
+    similarity_top_k: int = 2,
+    filters: Optional[MetadataFilters] = None,
+    alpha: Optional[float] = None,
+    vector_store_query_mode: str = "default",
+)
+```
+
+**Explanation of parameters:**
+
+**index (required)**
+
+The VectorStoreIndex you built from documents.
+
+Retriever will search over this index.
+
+**similarity_top_k (default=2)**
+
+Number of most similar nodes (text chunks) to retrieve.
+
+Example: If k=3, it will return the top 3 most relevant chunks.
+
+**filters (optional)**
+
+Lets you filter retrieval by metadata.
+
+Example: Only search inside documents where category="finance".
+
+**alpha (optional)**
+
+Used when blending vector similarity + keyword search (hybrid search).
+
+Range: 0.0 → only keyword search, 1.0 → only vector search, 0.5 → equal weight.
+
+**vector_store_query_mode (default="default")**
+
+How to query the vector store. Options may include:
+
+"default" → standard cosine similarity
+
+"mmr" → Maximal Marginal Relevance (improves diversity in results)
+
+"sparse" → for hybrid / sparse retrieval
+
+**Similarly for SummaryIndexRetriever and KGTableRetriever**
+
 SummaryIndex → SummaryIndexRetriever
 
 KnowledgeGraphIndex → KGTableRetriever
+
 
 This is a convenience method: you don’t need to manually import retriever classes.
 
