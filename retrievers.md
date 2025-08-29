@@ -2,6 +2,14 @@
 
 A Retriever = component that takes a query → returns the most relevant nodes from an index/vector store.
 
+**🔎 What is a Retriever in LlamaIndex?**
+
+A Retriever is responsible for fetching the most relevant nodes (chunks of documents) given a query.
+
+It sits between the index (where documents/embeddings live) and the response synthesizer (which generates the final answer).
+
+Retrievers decide what context the LLM sees → so they are critical for accuracy, speed, and cost.
+
 **🔹 Types of Retrievers in LlamaIndex**
 **1. Vector Index Retriever (Semantic Retriever)**
 
@@ -62,3 +70,34 @@ Useful when you have multiple indexes (e.g., PDF + SQL + API).
 | **Summary Retriever**    | Summarization tree    | Very long documents          |  
 | **AutoMergingRetriever** | Merges chunks         | Preserving larger context    |
 | **Router Retriever**     | Query routing         | Multi-source systems         |
+
+
+**🔎 1. as_retriever()**
+
+**What it does**
+
+**as_retriever()** converts an Index (like VectorStoreIndex) into a Retriever.
+
+Every index in LlamaIndex has its own default retriever type:
+
+VectorStoreIndex → VectorIndexRetriever
+
+SummaryIndex → SummaryIndexRetriever
+
+KnowledgeGraphIndex → KGTableRetriever
+
+This is a convenience method: you don’t need to manually import retriever classes.
+
+
+**🔎 2. retrieve()**
+**What it does**
+
+**retrieve(query: str)** runs a retrieval step:
+
+Converts your query into an embedding
+
+Searches the index (vector similarity / graph search / summary, depending on index type)
+
+Returns the top nodes (not final answers — just the most relevant pieces of context).
+
+So, retrieve() = "Fetch the relevant text chunks for my query."
