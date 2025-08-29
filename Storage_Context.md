@@ -72,3 +72,35 @@ You don’t need to manually configure docstore/vectorstore/indexstore unless yo
 ```python
 storage_context = StorageContext.from_defaults(persist_dir="storage")
 ```
+
+**📂 What’s in the storage/ folder?**
+
+When you persist an index, LlamaIndex saves all the metadata, embeddings, and documents needed to reload the index later without recomputing.
+
+**Typical contents:**
+
+**docstore.json**
+
+Stores the documents you loaded (SimpleDirectoryReader, etc.).
+
+Contains raw text chunks, metadata, and IDs.
+
+**index_store.json**
+
+Saves the structure of your index.
+
+**Example:** for VectorStoreIndex, it keeps references to the nodes and how they’re connected.
+
+If you used a tree-based index, it saves the tree structure.
+
+**vector_store.json (or a database like SQLite, FAISS, Weaviate, etc. depending on backend)**
+
+Contains the embeddings of your text chunks.
+
+Each text chunk (node) is converted into a vector and stored here.
+
+This is what lets your queries work quickly later.
+
+**graph_store.json (if you’re using graph-based indexes)**
+
+Stores relationships between nodes in a graph.
