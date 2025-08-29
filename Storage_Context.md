@@ -47,4 +47,28 @@ Saves cost (no repeated API calls to embedding models).
 
 Enables long-term use in production apps.
 
+**🔹 StorageContext.from_defaults()**
 
+StorageContext is the class in LlamaIndex that manages all the components needed for persistence:
+
+The docstore (stores raw documents + metadata)
+
+The vector store (stores embeddings)
+
+The index store (stores the structure of the index itself)
+
+**When you call from_defaults(), you’re saying:**
+
+👉 “Hey, build me a storage context using the standard/default settings. If I give you a folder, use that folder to load/save data.”
+
+**🛠️ What it does:**
+
+If persist_dir is provided → it tries to load existing storage from that folder.
+
+If no data exists → it creates fresh, empty storage in memory.
+
+You don’t need to manually configure docstore/vectorstore/indexstore unless you want customization.
+
+```python
+storage_context = StorageContext.from_defaults(persist_dir="storage")
+```
